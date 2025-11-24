@@ -59,6 +59,7 @@ function Platform() {
         
         {/* Main Heading */}
         <motion.div
+        id='features'
           className="text-center mb-12"
           initial={{ opacity: 0, y: -20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -73,7 +74,7 @@ function Platform() {
           </p>
         </motion.div>
 
-        {/* Highlights Section - Fixed for equal height */}
+        {/* Highlights Section  */}
         <motion.div
           className="flex flex-col md:flex-row gap-8 justify-center items-stretch"
           variants={containerVariants}

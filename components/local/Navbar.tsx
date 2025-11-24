@@ -8,11 +8,11 @@ import { usePathname } from "next/navigation";
 
 function Navbar() {
   const navItems = [
-    { label: "Home", link: "/" },
-    { label: "Features", link: "/features" },
-    { label: "Pricing", link: "/pricing" },
-    { label: "FAQ", link: "/faq" },
-    { label: "Contact", link: "/contact" },
+    { label: "Home", link: "#" },
+    { label: "Features", link: "#features" },
+    { label: "Pricing", link: "#pricing" },
+    { label: "FAQ", link: "#faq" },
+    { label: "Contact", link: "#contact" },
   ];
 
   const pathname = usePathname();
@@ -64,7 +64,7 @@ const activeTab = navItems.find(item => item.link === pathname)?.label || "Home"
           {/* CTA + Mobile Icon */}
           <div className="flex items-center gap-2">
             <Link
-              href="/auth/login"
+              href="/sign-in"
               className="hidden md:block text-sm font-medium"
             >
               Sign In
@@ -72,7 +72,7 @@ const activeTab = navItems.find(item => item.link === pathname)?.label || "Home"
 
             <motion.div whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.98 }}>
               <Link
-                href="/auth/signup"
+                href="/sign-up"
                 className="bg-brand rounded-lg px-4 py-2 text-sm text-white shadow-md"
               >
                 Join Now
@@ -119,7 +119,7 @@ const activeTab = navItems.find(item => item.link === pathname)?.label || "Home"
               <hr className="my-2" />
 
               <Link
-                href="/auth/login"
+                href="/sign-in"
                 className="bg-brand text-white py-2 rounded-lg text-center"
                 onClick={() => setMenuOpen(false)}
               >
