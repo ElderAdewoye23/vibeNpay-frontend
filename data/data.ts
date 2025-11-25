@@ -1,4 +1,6 @@
-
+import facebook from "../public/facebook.png"
+import X from "../public/X.png";
+import insta from "../public/instagram.png"
 
 
  export const buttons = [
@@ -119,3 +121,63 @@ export const pricingPlans = [
     comingSoon: true
   }
 ]
+
+export const faqItems = [
+  {
+    id: "item-1",
+    question: "How do I get started on VibenPay?",
+    answer:
+      "Sign up with your email, verify your profile, and you're ready to create content and transact. Verification typically takes 5-10 minutes.",
+  },
+  {
+    id: "item-2",
+    question: "When do I start earning money?",
+    answer: "You can post content immediately, but monetization starts once you reach 1,000 followers. After that, you earn$4per 1,000 views on your content.",
+  },
+  {
+    id: "item-3",
+    question: "What payment methods do you support?",
+    answer:
+      "We support bank transfers, mobile money, and crypto withdrawals. Withdrawals are processed instantly with low fees.",
+  },
+  {
+    id: "item-4",
+    question: "Is it safe to buy crypto on VibenPay?",
+    answer: "Yes, we use bank-grade security with two-factor authentication, encrypted wallets, and comply with financial regulations.",
+  },
+  {
+    id: "item-5",
+    question: "Can I transfer money internationally?",
+    answer: "Absolutely. VibenPay enables borderless transactions. Send money to over 150 countries with instant settlement and competitive rates.",
+  },
+  {
+    id: "item-6",
+    question: "What's included in the Creator Plus plan?",
+    answer: "Full monetization access, ad bonuses, live gift features, investment tools, and priority customer support.",
+  }
+];
+
+export const socialLinks = [
+    { image: facebook, label: "Facebook" },
+    { image: X, label: "Twitter" },
+    { image: insta, label: "Instagram" }
+  ]
+
+
+  export const footerLinks = {
+    product: [
+      { name: "Features", href: "#features" },
+      { name: "Pricing", href: "#pricing" },
+      { name: "Security", href: "#" }
+    ],
+    company: [
+      { name: "About Us", href: "#" },
+      { name: "Blog", href: "#" },
+      { name: "Careers", href: "#" }
+    ],
+    legal: [
+      { name: "Terms of Service", href: "#" },
+      { name: "Privacy Policy", href: "#" },
+      { name: "Contact", href: "#contact" }
+    ]
+  }

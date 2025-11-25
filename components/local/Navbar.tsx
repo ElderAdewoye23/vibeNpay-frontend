@@ -34,8 +34,8 @@ const activeTab = navItems.find(item => item.link === pathname)?.label || "Home"
         <div className="flex justify-between items-center">
 
           {/* Logo */}
-          <div className="flex items-center gap-3">
-            <div className="bg-brand w-8 h-8 flex items-center justify-center text-white text-lg font-bold rounded-lg">
+          <div className="flex items-center gap-3" >
+            <div className="bg-brand w-8 h-8 flex items-center justify-center text-white text-lg font-bold rounded-lg" id="#">
               V
             </div>
             <h2 className="font-bold text-xl hidden md:block">VibenPay</h2>
