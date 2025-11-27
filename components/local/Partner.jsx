@@ -36,7 +36,7 @@ function Partner() {
   ]
 
   return (
-    <motion.div className="w-full py-12 bg-white" initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} transition={{ duration: 0.5 }} viewport={{ once: true }}>
+    <motion.div className="w-full mt-16 py-12 bg-white" initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} transition={{ duration: 0.5 }} viewport={{ once: true }}>
       <motion.div className="max-w-4xl mx-auto px-4">
         
        

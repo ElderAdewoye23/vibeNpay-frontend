@@ -22,7 +22,7 @@ function Hero() {
  
   return (
     <motion.div
-      className='bg-gradient-to-t from-white to-brand-hero md:bg-brand-hero h-screen'
+      className='bg-gradient-to-t from-white to-brand-hero md:bg-brand-hero '
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.6 }}

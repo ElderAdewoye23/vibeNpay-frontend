@@ -269,7 +269,7 @@ function Contact() {
                 <motion.div variants={itemVariants} className="pt-4">
                   <Button
                     type="submit"
-                    className="w-full bg-brand text-white font-semibold py-3 rounded-lg hover:bg-blue-700 transition-colors"
+                    className="w-full bg-brand text-white font-semibold py-6 rounded-lg hover:bg-blue-700 transition-colors"
                   >
                     Send Message
                   </Button>

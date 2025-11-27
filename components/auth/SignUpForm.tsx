@@ -8,7 +8,7 @@ import { Label } from '@/components/ui/label'
 import { Checkbox } from '@/components/ui/checkbox'
 import { Separator } from '@/components/ui/separator'
 import Image from 'next/image'
-import { Eye, EyeClosed } from "lucide-react"
+import { Eye, EyeClosed, ArrowLeft } from "lucide-react"
 import Link from 'next/link'
 
 function SignUpForm() {
@@ -46,8 +46,15 @@ function SignUpForm() {
 
       {/* Right Side - Brand Message */}
 
-<div className="flex-1 flex items-center justify-center p-8">
-        <Card className="w-full max-w-md">
+<div className="flex-1 flex items-center justify-center p-8 relative">
+        {/* Back to Home Button */}
+        <Link href="/" className="absolute top-4 left-3 ">
+          <Button variant="outline" size="icon" className="rounded-full border-gray-300 hover:bg-gray-100">
+            <ArrowLeft className="w-4 h-4 text-gray-700" />
+          </Button>
+        </Link>
+
+        <Card className="w-full max-w-md mt-5">
           <CardHeader className="space-y-1">
             <div>
               <Image 
@@ -145,14 +152,18 @@ function SignUpForm() {
             </div>
 
             {/* Terms Agreement */}
-            <div className="flex items-center space-x-2">
-              <Checkbox id="terms" />
+            <div className="flex flex-col md:flex-row items-center  space-x-1">
+            <div className='flex items-center gap-2'>
+                <Checkbox id="terms" className='border-2' />
               <Label htmlFor="terms" className="text-sm text-gray-500">
-                I agree to the{" "}
-                <Button variant="link" className="p-0 h-auto text-blue-700 font-normal">
+                I agree to the
+              </Label>
+            </div>
+              <Label>
+                 <Button variant="link" className="p-0 h-auto text-blue-700 font-normal">
                   Terms of Service
-                </Button>{" "}
-                and{" "}
+                </Button>
+                and
                 <Button variant="link" className="p-0 h-auto text-blue-700 font-normal">
                   Privacy Policy
                 </Button>
@@ -163,7 +174,7 @@ function SignUpForm() {
             <Separator className="my-6" />
 
             {/* Create Account Button */}
-            <Button className="w-full text-gray-200 font-medium text-md bg-brand">
+            <Button className="w-full text-gray-200 font-medium text-md bg-brand hover:bg-brand-dark">
               Create Account
             </Button>
 

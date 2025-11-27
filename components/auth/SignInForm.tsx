@@ -8,7 +8,7 @@ import { Label } from '@/components/ui/label'
 import { Checkbox } from '@/components/ui/checkbox'
 import { Separator } from '@/components/ui/separator';
 import Image from 'next/image'
-import {Eye, EyeClosed  } from "lucide-react"
+import {ArrowLeft, Eye, EyeClosed  } from "lucide-react"
 import Link from 'next/link'
 
 function SignInForm() {
@@ -25,7 +25,13 @@ const togglePassword = () => {
         
       {/* Left Side - Sign In Form */}
       
-      <div className="flex-1 flex items-center justify-center p-8">
+      <div className="flex-1 flex items-center justify-center p-8 relative">
+         {/* Back to Home Button */}
+        <Link href="/" className="absolute top-4 left-3 ">
+          <Button variant="outline" size="icon" className="rounded-full border-gray-300 hover:bg-gray-100">
+            <ArrowLeft className="w-4 h-4 text-gray-700" />
+          </Button>
+        </Link>
         
         <Card className="w-full max-w-md">
         
@@ -94,7 +100,7 @@ const togglePassword = () => {
             <Separator className="my-6" />
 
             {/* Sign In Button */}
-            <Button className="w-full text-gray-200 font-medium text-md bg-brand">
+            <Button className="w-full text-gray-200 font-medium text-md bg-brand hover:bg-brand-dark">
               Sign In
             </Button>
 

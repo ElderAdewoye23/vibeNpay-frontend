@@ -23,7 +23,7 @@ function CreatorCards() {
 
   return (
     <motion.div
-      className='px-4 py-20 border-t-2 md:px-10 my-5 md:my-10 bg-gray-100 h-screen'
+      className='px-4 py-20 border-t-2 md:px-10 my-10 bg-gray-100'
       initial={{ opacity: 0 }}
       whileInView={{ opacity: 1 }}
       transition={{ duration: 0.6 }}

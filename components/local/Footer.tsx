@@ -1,16 +1,25 @@
-
+"use client"
 
 import React from 'react'
+import { motion } from 'framer-motion'
 import { footerLinks } from '../../data/data'
 
 function Footer() {
-  
+  const container = {
+    hidden: { opacity: 0, y: 20 },
+    show: { opacity: 1, y: 0, transition: { staggerChildren: 0.12 } },
+  }
+
+  const item = {
+    hidden: { opacity: 0, y: 10 },
+    show: { opacity: 1, y: 0, transition: { duration: 0.45 } },
+  }
 
   return (
-    <footer className="w-full bg-gray-900 text-white">
+    <motion.footer className="w-full bg-gray-900 text-white" initial="hidden" animate="show" variants={container}>
       
       {/* Top Section - CTA */}
-      <div className="bg-gradient-to-r from-brand to-brand-dark py-16">
+      <motion.div className="bg-gradient-to-r from-brand to-brand-dark py-16" variants={item}>
         <div className="max-w-4xl mx-auto px-4 text-center">
           <h2 className="text-3xl md:text-4xl font-bold mb-4">
             Ready to Transform Your Creative Career?
@@ -22,23 +31,23 @@ function Footer() {
             Get Early Access Now
           </button>
         </div>
-      </div>
+      </motion.div>
 
       {/* Divider Line */}
       <div className="border-t border-gray-700"></div>
 
       {/* Bottom Section - Links & Info */}
-      <div className="py-12">
+      <motion.div className="py-12" variants={item}>
         <div className="max-w-6xl mx-auto px-4">
           
           {/* Brand Section */}
-          <div className="text-center mb-8">
+          <motion.div className="text-center mb-8" variants={item}>
             <h3 className="text-2xl font-bold mb-2">VibenPay</h3>
             <p className="text-gray-400">Connect. Create. Earn. Invest.</p>
-          </div>
+          </motion.div>
 
           {/* Links Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+          <motion.div className="grid grid-cols-1 md:grid-cols-3 md:border-none gap-8 mb-8 border border-white rounded-lg text-center p-2 justify-items-center" variants={item}>
             
             {/* Product Column */}
             <div>
@@ -83,21 +92,21 @@ function Footer() {
             </div>
 
             {/* Empty column for spacing */}
-            <div></div>
+            <div className="hidden md:block"></div>
 
-          </div>
+          </motion.div>
 
           {/* Copyright */}
-          <div className="text-center border-t border-gray-800 pt-8">
+          <motion.div className="text-center border-t border-gray-800 pt-8" variants={item}>
             <p className="text-gray-400">
               © 2025 VibenPay. All rights reserved. Empowering creators worldwide.
             </p>
-          </div>
+          </motion.div>
 
         </div>
-      </div>
+      </motion.div>
 
-    </footer>
+    </motion.footer>
   )
 }
 
