@@ -1,10 +1,11 @@
+import DashboardMain from "@/components/dashboard/DashboardMain"
 
 
 function DashboardPage () {
 
     return(
 <div>
-    <h1>Dashboard Page</h1>
+  <DashboardMain />
 </div>
     )
 }

@@ -2,60 +2,147 @@
 import React from 'react'
 import Image from 'next/image'
 import vibeNpayLogo from '../../public/vibeNpay-white.png'
-import {useAuthStore} from "../../store/useAuthStore"
-import { Bell, CircleUser, MessageCircle, MessageCircleQuestionMark, Moon, Sun,  } from 'lucide-react'
+import { useAuthStore } from "../../store/useAuthStore"
+import { 
+  Bell, 
+  CircleUser, 
+  MessageCircle, 
+  MessageCircleQuestionMark, 
+  Moon, 
+  Sun, 
+
+  LogOut
+} from 'lucide-react'
+import { useTheme } from 'next-themes'
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+ 
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu'
+import { Button } from '@/components/ui/button'
 
 function DashboardNavbar() {
+  const { signOut, user } = useAuthStore()
+  const { theme, setTheme } = useTheme()
 
-    const { signOut,user} = useAuthStore()
+  const navItems = [
+    {
+      id: 1,
+      icon: <MessageCircleQuestionMark size={20} />,
+      tooltip: 'Help & Support',
+      hide: true
+    },
+    {
+      id: 2,
+      icon: <MessageCircle size={20} />,
+      tooltip: 'Chat',
+      hide: true
+    },
+    {
+      id: 3,
+      icon: <Bell size={20} />,
+      tooltip: 'Notifications'
+    },
+  ]
 
-const navItems = [
-    {
-        icon:<MessageCircleQuestionMark />
-    },
-    {
-        icon:<MessageCircle />
-    },
-    {
-        icon: <Bell />
-    },
-    {
-        icon: <Moon />
-    },
-    {
-        icon: <CircleUser />
-    }
-]
+  const toggleTheme = () => {
+    // Simple toggle between light and dark
+    setTheme(theme === 'dark' ? 'light' : 'dark')
+  }
+
+//   // Get current theme icon
+//   const getThemeIcon = () => {
+//     if (theme === 'system') {
+//       return systemTheme === 'dark' ? <Moon size={20} /> : <Sun size={20} />
+//     }
+//     return theme === 'dark' ? <Moon size={20} /> : <Sun size={20} />
+//   }
 
   return (
-    <nav className='bg-gray-100 shadow-md py-2 w-full '>
-       <div>
-
-        {/* First side */}
-        <div>
-            <Image
+    <nav className='bg-gray-100 dark:bg-gray-800 shadow-md py-4 px-6 w-full border-b border-gray-200 dark:border-gray-800'>
+      <div className='flex justify-between items-center mx-auto'>
+        {/* First side  */}
+        <div className="flex items-center">
+          <Image
             src={vibeNpayLogo}
-            alt=''
-            width={100}
-            height={100}
-             className="mix-blend-multiply"
-            />
+            alt="VibenPay Logo"
+            width={60}
+            height={60}
+            className={`${theme === 'dark' ? '' : 'mix-blend-multiply'} w-9 h-9 object-contain`}
+          />
         </div>
 
-        {/* second section */}
+        {/* Second section  */}
+        <div className='hidden md:flex'>
+          <h2 className='text-gray-800 dark:text-gray-200'>
+            <span className='text-gray-600 dark:text-gray-400'>Hi, </span>
+            <span className='font-semibold'>{user?.fullName || 'Creator'} </span>
+          </h2>
+        </div>
+
+        {/* Third section - Icons */}
+        <div className='flex items-center '>
         <div>
-            <h2><span>Hi, </span>
-            <span>{user?.fullName} </span>
-            </h2>
+              {navItems.map((item) => (
+            <button
+              key={item.id}
+              type="button"
+              aria-label={item.tooltip ?? `nav-item-${item.id}`}
+              title={item.tooltip}
+              className={`relative p-2 rounded-full text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors duration-200 group ${
+                item.hide ? 'hidden md:inline-flex' : 'inline-flex'
+              }`}
+            >
+              {item.icon}
+              {/* Notification badge example */}
+              {item.id === 3 && (
+                <span className="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full"></span>
+              )}
+            </button>
+          ))}
         </div>
 
-        {/* Third section */}
-        <div>
+          {/* Theme Toggle Button */}
+          
+          <div>
+          <Button onClick={toggleTheme}>
+            {theme === "dark" ? <Sun size={20}  /> : <Moon size={20}  />}
+          </Button>
+          </div>
 
+          {/* User Menu */}
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button
+                variant="ghost"
+                className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800"
+              >
+                <CircleUser size={20} />
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end" className="w-56">
+              <DropdownMenuLabel>
+                <div className="flex flex-col space-y-1">
+                  <p className="text-sm font-medium leading-none">{user?.fullName}</p>
+                  <p className="text-xs leading-none text-gray-500 dark:text-gray-400">
+                    {user?.email}
+                  </p>
+                </div>
+              </DropdownMenuLabel>
+              <DropdownMenuItem 
+                onClick={() => signOut()}
+                className="text-red-600 focus:text-red-600"
+              >
+                <LogOut className="mr-2 h-4 w-4" />
+                Log out
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
         </div>
-
-       </div>
-
+      </div>
     </nav>
   )
 }
