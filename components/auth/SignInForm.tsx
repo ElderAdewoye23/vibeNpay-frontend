@@ -10,15 +10,44 @@ import { Separator } from '@/components/ui/separator';
 import Image from 'next/image'
 import {ArrowLeft, Eye, EyeClosed  } from "lucide-react"
 import Link from 'next/link'
+import {type signInFormData, signInSchema} from "../../lib/validation/auth";
+import {useAuthStore} from "../../store/useAuthStore";
+import { useRouter } from 'next/navigation'
+import { useForm } from 'react-hook-form'
+import { zodResolver } from '@hookform/resolvers/zod'
 
 function SignInForm() {
-
+const{signIn} = useAuthStore();
+const router = useRouter();
+  
 const [showPassword, setShowPassword] = useState<boolean>(false);
 
 const togglePassword = () => {
 
     setShowPassword(prev => !prev);
 }
+
+const{register, handleSubmit, formState:{errors, isSubmitting},reset, watch,setValue } = useForm<signInFormData>({
+resolver:zodResolver(signInSchema),defaultValues: {
+      email: '',
+      password: '',
+      rememberMe: false,
+    },
+})
+
+const rememberMe = watch('rememberMe');
+
+
+const onSubmit = (data: signInFormData) => {
+ 
+  signIn("mock-token", {
+    id: "user_" + Date.now(),
+    fullName: "John Doe",
+    email: data.email,
+  });
+reset()
+  router.push("/dashboard");
+};
 
   return (
     <div className="min-h-screen bg-gray-50 flex">
@@ -52,6 +81,7 @@ const togglePassword = () => {
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
+            <form onSubmit={handleSubmit(onSubmit)} >
             {/* Email Field */}
             <div className="space-y-2">
               <Label htmlFor="email" className="text-sm font-semibold text-gray-700">
@@ -62,7 +92,9 @@ const togglePassword = () => {
                 type="email"
                 placeholder="you@example.com"
                 className="w-full"
+                {...register("email")}
               />
+              {errors.email && <p className="text-red-500 text-sm mt-1">{errors.email.message}</p>}
             </div>
 
             {/* Password Field */}
@@ -76,34 +108,37 @@ const togglePassword = () => {
                 type={showPassword ? "text" : "password"}
                 placeholder="••••••••"
                 className="w-full"
+                {...register("password")}
               />
               <Button onClick={togglePassword} className='absolute top-0 right-2 '>
                 {showPassword ? <Eye className='w-5 h-5 text-gray-800' /> : <EyeClosed className='w-5 h-5 text-gray-400' />}
               </Button>
+              {errors.password && <p className="text-red-500 text-sm mt-1">{errors.password.message}</p>}
               </div>
             </div>
 
             {/* Remember Me & Forgot Password */}
             <div className="flex items-center justify-between">
               <div className="flex items-center space-x-2">
-                <Checkbox id="remember" />
+                <Checkbox id="remember"   checked={rememberMe} onCheckedChange={(checked) => setValue('rememberMe', checked as boolean)}/>
                 <Label htmlFor="remember" className="text-sm text-gray-500">
                   Remember me
                 </Label>
               </div>
+              <Link href="" >
               <Button variant="link" className="p-0 h-auto text-sm text-blue-700 ">
                 Forgot password?
-              </Button>
+              </Button></Link>
             </div>
 
             {/* Divider */}
             <Separator className="my-6" />
 
             {/* Sign In Button */}
-            <Button className="w-full text-gray-200 font-medium text-md bg-brand hover:bg-brand-dark">
-              Sign In
+            <Button type='submit' className="w-full text-gray-200 font-medium text-md bg-brand hover:bg-brand-dark"  disabled={isSubmitting}>
+              {isSubmitting ? "Signing In..." : "Sign In"}
             </Button>
-
+</form>
             {/* Sign Up Link */}
             <div className="text-center text-sm text-gray-600">
               Don&apos;t have an account?{" "}

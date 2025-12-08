@@ -8,10 +8,21 @@ import { Label } from '@/components/ui/label'
 import { Checkbox } from '@/components/ui/checkbox'
 import { Separator } from '@/components/ui/separator'
 import Image from 'next/image'
-import { Eye, EyeClosed, ArrowLeft } from "lucide-react"
-import Link from 'next/link'
+import { Eye, EyeClosed, ArrowLeft, XCircle } from "lucide-react"
+import Link from 'next/link';
+import { useRouter } from 'next/navigation'
+import {signUpFormData, signUpSchema} from "../../lib/validation/auth"
+import { zodResolver } from '@hookform/resolvers/zod'
+import { useForm } from 'react-hook-form'
+import {useAuthStore} from "../../store/useAuthStore"
+import { PasswordStrength } from '../local/PasswordStrength'
+
 
 function SignUpForm() {
+
+  const router = useRouter()
+
+  const {signUp} = useAuthStore();
 
       const [showPassword, setShowPassword] = useState<boolean>(false)
 
@@ -19,7 +30,33 @@ function SignUpForm() {
     setShowPassword(prev => !prev)
   }
 
+  const {register, handleSubmit, formState:{errors, isSubmitting},setValue,watch ,reset} = useForm<signUpFormData>({
+    resolver: zodResolver(signUpSchema),
+    defaultValues: {
+      fullName: '',
+      email: '',
+      phone: '',
+      password: '',
+      agreeToTerms: false,
+    }
+  })
 
+   const agreeToTerms = watch('agreeToTerms')
+   const password = watch('password')
+
+
+  const onSubmit = (data: signUpFormData) => {
+    signUp("mock-token", {
+    id: "user_" + Date.now(),
+    fullName: "John Doe",
+    email: data.email,
+  });
+    reset()
+    router.push("/dashboard");
+
+  } 
+
+ 
   return (
     <div className="min-h-screen bg-gray-50 flex">
       {/* Left Side - Sign Up Form */}
@@ -72,8 +109,9 @@ function SignUpForm() {
               Start your journey to smarter finance and professional connections
             </CardDescription>
           </CardHeader>
-
+         
           <CardContent className="space-y-4">
+             <form onSubmit={handleSubmit(onSubmit)}>
             {/* Divider */}
             <Separator className="my-2" />
 
@@ -95,7 +133,9 @@ function SignUpForm() {
                 type="text"
                 placeholder="John Doe"
                 className="w-full"
+              {...register("fullName")}
               />
+              {errors.fullName && <p className="text-red-500 text-sm mt-1">{errors.fullName.message}</p> }
             </div>
 
             {/* Email Field */}
@@ -108,7 +148,10 @@ function SignUpForm() {
                 type="email"
                 placeholder="you@example.com"
                 className="w-full"
+                {...register("email")}
+              
               />
+              {errors.email && <p className="text-red-500 text-sm mt-1">{errors.email.message}</p> }
             </div>
 
             {/* Phone Number Field */}
@@ -121,7 +164,9 @@ function SignUpForm() {
                 type="tel"
                 placeholder="+1 (555) 000-0000"
                 className="w-full"
+                {...register("phone")}
               />
+              {errors.phone && <p className="text-red-500 text-sm mt-1">{errors.phone.message}</p> }
             </div>
 
             {/* Password Field */}
@@ -135,6 +180,7 @@ function SignUpForm() {
                   type={showPassword ? "text" : "password"}
                   placeholder="••••••••"
                   className="w-full"
+                  {...register("password")}
                 />
                 <Button 
                   type="button"
@@ -149,15 +195,30 @@ function SignUpForm() {
                   }
                 </Button>
               </div>
+
+              {password && <PasswordStrength password={password} />}
+               {errors.password && (
+                  <div className="mt-2 space-y-1">
+                    {errors.password.message?.split('. ').map((message, index) => (
+                      message && (
+                        <div key={index} className="flex items-center gap-2">
+                          <XCircle className="w-4 h-4 text-red-500" />
+                          <span className="text-sm text-red-500">{message}</span>
+                        </div>
+                      )
+                    ))}
+                  </div>
+                )}
             </div>
 
             {/* Terms Agreement */}
             <div className="flex flex-col md:flex-row items-center  space-x-1">
             <div className='flex items-center gap-2'>
-                <Checkbox id="terms" className='border-2' />
+                <Checkbox id="terms" className='border-2' {...register("agreeToTerms")} checked={agreeToTerms} onCheckedChange={(checked) => setValue('agreeToTerms', checked as boolean)} />
               <Label htmlFor="terms" className="text-sm text-gray-500">
                 I agree to the
               </Label>
+              
             </div>
               <Label>
                  <Button variant="link" className="p-0 h-auto text-blue-700 font-normal">
@@ -168,14 +229,20 @@ function SignUpForm() {
                   Privacy Policy
                 </Button>
               </Label>
+              {errors.agreeToTerms && (
+                <p className="text-red-500 text-sm mt-1">{errors.agreeToTerms.message}</p>
+              )}
+
             </div>
 
             {/* Divider */}
             <Separator className="my-6" />
 
             {/* Create Account Button */}
-            <Button className="w-full text-gray-200 font-medium text-md bg-brand hover:bg-brand-dark">
-              Create Account
+            <Button type='submit' className="w-full text-gray-200 font-medium text-md bg-brand hover:bg-brand-dark"
+            disabled={!agreeToTerms || isSubmitting }
+            >
+              {isSubmitting  ? 'Creating Account...' : 'Create Account'}
             </Button>
 
             {/* Sign In Link */}
@@ -185,7 +252,9 @@ function SignUpForm() {
                <Link href="/sign-in" > Sign in here</Link>
               </Button>
             </div>
+             </form>
           </CardContent>
+         
         </Card>
       </div>
 
