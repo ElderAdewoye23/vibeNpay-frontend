@@ -48,7 +48,7 @@ const sideBarItems = [
 const {activeTab, setActiveTab} = useSidebarStore();
 
   return (
-    <aside className='w-60 p-4 sticky top-0 bg-gray-100 dark:bg-gray-800 h-screen border-r border-gray-200 dark:border-gray-800'>
+    <aside className='w-60 p-4 fixed top-16 h-[calc(100vh-4rem)] bg-gray-100 dark:bg-gray-800  border-r border-gray-200 dark:border-gray-800'>
        <nav className='flex flex-col items-center justify-center space-y-6 py-4 '>
         {
           sideBarItems.map((item) => (

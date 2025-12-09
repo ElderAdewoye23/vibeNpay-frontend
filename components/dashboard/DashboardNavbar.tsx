@@ -64,8 +64,8 @@ const {activeTab, setActiveTab} = useSidebarStore();
 //   }
 
   return (
-    <nav className='bg-gray-100 dark:bg-gray-800 shadow-md py-4 px-6 w-full border-b border-gray-200 dark:border-gray-800'>
-      <div className='flex justify-between items-center mx-auto'>
+    <nav className='fixed top-0 left-0 right-0 z-50 bg-gray-100 dark:bg-gray-800 shadow-md py-4 px-6 w-full border-b border-gray-200 dark:border-gray-800'>
+      <div className='flex justify-between items-center mx-auto '>
         {/* First side  */}
         <div className="flex items-center">
           <Image
