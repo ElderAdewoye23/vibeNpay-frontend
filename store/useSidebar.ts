@@ -4,7 +4,7 @@ import {persist} from "zustand/middleware";
 
 
 interface SidebarState {
-    activeTab:"home" | "explore" | "finance" | "crypto" | "profile";
+    activeTab:"home" | "explore" | "finance" | "crypto" | "profile" |"help" | "chat" | "notifications";
     setActiveTab:(tab:SidebarState["activeTab"]) => void;
 }
 

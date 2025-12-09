@@ -1,14 +1,31 @@
+"use client"
+
 import DashboardNavbar from "@/components/dashboard/DashboardNavbar";
 import DashboardSidebar from "@/components/dashboard/DashboardSidebar";
 import MobileNav from "@/components/dashboard/MobileNav";
-
+import { ThemeProvider } from 'next-themes';
+import {useAuthStore} from "../../store/useAuthStore";
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 
 export default function DashboardLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+
+const {  isAuthenticated, } = useAuthStore();
+const router = useRouter();
+
+// Redirect to sign-in if not authenticated
+useEffect(() =>{
+  if (!isAuthenticated) {
+    router.push("/sign-in");
+  }
+}, [isAuthenticated, router] )
+
   return (
+    <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
       <div>
          {/* Desktop Layout */}
         
@@ -30,12 +47,13 @@ export default function DashboardLayout({
         <div className="lg:hidden flex flex-col min-h-screen">
            <DashboardNavbar />
             <main className="flex-1 overflow-y-auto pb-10">
-          <div className="p-6">{children}</div>
+          <div className="p-3">{children}</div>
         </main>
         <MobileNav />
         </div>
         
         
    </div>
+   </ThemeProvider>
   );
 }

@@ -46,13 +46,17 @@ const mobileNavItems = [
 
   return (
    
-<nav className="fixed bottom-0 left-0 right-0 z-50 bg-gray-100 dark:bg-gray-800 border-t border-gray-200 dark:border-gray-800 md:hidden">
-  <div className="flex items-center justify-between space-x-1 py-2 px-2">
+<nav className="fixed bottom-0 left-0 right-0 z-50 bg-gray-100 dark:bg-gray-800 dark:border-gray-800  md:hidden">
+
+  <div className={`flex items-center justify-between space-x-1 px-4 py-2`}>
     {mobileNavItems.map((item) => (
-        <Button key={item.id} onClick={()=> setActiveTab(item.id) } className={`flex-1 px-3 py-2 rounded-md transition flex flex-col items-center justify-center text-sm ${ activeTab === item.id ? 'text-brand dark:text-darkbg' : 'text-gray-500' }`} >
+        <div key={item.id} className={`${activeTab === item.id ? 'border-t-2 border-brand dark:border-darkbg ' : ''}  `}>
+          
+          <Button  onClick={()=> setActiveTab(item.id) } className={`flex-1 px-3 py-2 mt-4  transition flex flex-col items-center justify-center text-sm ${ activeTab === item.id ? 'text-brand dark:text-darkbg ' : 'text-gray-500' }`} >
           {item.icon}
           <span>{item.label}</span>
         </Button>
+        </div>
     )    )}
   </div>
 </nav>

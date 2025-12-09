@@ -2,7 +2,8 @@
 import React from 'react'
 import Image from 'next/image'
 import vibeNpayLogo from '../../public/vibeNpay-white.png'
-import { useAuthStore } from "../../store/useAuthStore"
+import { useAuthStore } from "../../store/useAuthStore";
+import {useSidebarStore} from "../../store/useSidebar";
 import { 
   Bell, 
   CircleUser, 
@@ -24,29 +25,30 @@ import {
 } from '@/components/ui/dropdown-menu'
 import { Button } from '@/components/ui/button'
 
+
 function DashboardNavbar() {
   const { signOut, user } = useAuthStore()
   const { theme, setTheme } = useTheme()
-
-  const navItems = [
+const {activeTab, setActiveTab} = useSidebarStore();
+  const navItems: Array<{id: 'help' | 'chat' | 'notifications', icon: React.ReactNode, tooltip: string, hide?: boolean}> = [
     {
-      id: 1,
+      id: 'help',
       icon: <MessageCircleQuestionMark size={20} />,
       tooltip: 'Help & Support',
       hide: true
     },
     {
-      id: 2,
+      id: 'chat',
       icon: <MessageCircle size={20} />,
       tooltip: 'Chat',
       hide: true
     },
     {
-      id: 3,
+      id: 'notifications',
       icon: <Bell size={20} />,
       tooltip: 'Notifications'
     },
-  ]
+  ] 
 
   const toggleTheme = () => {
     // Simple toggle between light and dark
@@ -69,9 +71,9 @@ function DashboardNavbar() {
           <Image
             src={vibeNpayLogo}
             alt="VibenPay Logo"
-            width={60}
-            height={60}
-            className={`${theme === 'dark' ? '' : 'mix-blend-multiply'} w-9 h-9 object-contain`}
+            width={80}
+            height={80}
+            className={`${theme === 'dark' ? ' ' : 'mix-blend-multiply'} w-9 h-9 object-contain`}
           />
         </div>
 
@@ -79,7 +81,7 @@ function DashboardNavbar() {
         <div className='hidden md:flex'>
           <h2 className='text-gray-800 dark:text-gray-200'>
             <span className='text-gray-600 dark:text-gray-400'>Hi, </span>
-            <span className='font-semibold'>{user?.fullName || 'Creator'} </span>
+            <span className='font-semibold'>{user?.fullName } </span>
           </h2>
         </div>
 
@@ -88,17 +90,18 @@ function DashboardNavbar() {
         <div>
               {navItems.map((item) => (
             <button
+            onClick={() => setActiveTab(item.id)}
               key={item.id}
               type="button"
               aria-label={item.tooltip ?? `nav-item-${item.id}`}
               title={item.tooltip}
-              className={`relative p-2 rounded-full text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors duration-200 group ${
+              className={` ${activeTab === item.id ? 'text-brand dark:text-darkbg' : 'text-gray-700 dark:text-gray-200 ' } relative p-2 rounded-full  hover:text-brand dark:hover:text-darkbg transition-colors duration-200 group ${
                 item.hide ? 'hidden md:inline-flex' : 'inline-flex'
-              }`}
+              } `}
             >
               {item.icon}
               {/* Notification badge example */}
-              {item.id === 3 && (
+              {item.id === "notifications" && (
                 <span className="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full"></span>
               )}
             </button>
@@ -108,7 +111,7 @@ function DashboardNavbar() {
           {/* Theme Toggle Button */}
           
           <div>
-          <Button onClick={toggleTheme}>
+          <Button onClick={toggleTheme} className='w-8 h-8 rounded-md hover:bg-gray-200'>
             {theme === "dark" ? <Sun size={20}  /> : <Moon size={20}  />}
           </Button>
           </div>
