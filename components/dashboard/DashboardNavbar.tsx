@@ -111,7 +111,7 @@ const {activeTab, setActiveTab} = useSidebarStore();
           {/* Theme Toggle Button */}
           
           <div>
-          <Button onClick={toggleTheme} className='w-8 h-8 rounded-md hover:bg-gray-200'>
+          <Button onClick={toggleTheme} className='w-8 h-8 rounded-md hover:bg-gray-200 dark:hover:bg-gray-700'>
             {theme === "dark" ? <Sun size={20}  /> : <Moon size={20}  />}
           </Button>
           </div>

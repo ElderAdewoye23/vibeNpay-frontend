@@ -125,10 +125,10 @@ reset()
                   Remember me
                 </Label>
               </div>
-              <Link href="" >
-              <Button variant="link" className="p-0 h-auto text-sm text-blue-700 ">
-                Forgot password?
-              </Button></Link>
+              <Link href="/forgot-password" >
+                <Button variant="link" className="p-0 h-auto text-sm text-blue-700 ">
+                  Forgot password?
+                </Button></Link>
             </div>
 
             {/* Divider */}
