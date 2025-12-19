@@ -4,6 +4,7 @@ import React from 'react'
 import { motion } from 'framer-motion'
 import {pricingPlans} from "../../data/data"
 import { Button } from '../ui/button'
+import Link from 'next/link'
 
 function HighlightPlatform() {
 
@@ -68,7 +69,9 @@ function HighlightPlatform() {
                 ))}
               </div>
             <div className='w-full text-center' >
-                  <Button className={` ${plan.styled ? "bg-brand text-white hover:bg-brand-dark": " border border-gray-200" } `}>{plan.cta}</Button>
+                 <Link href={plan.href} >
+                  <Button className={` ${plan.styled ? "bg-brand text-white hover:bg-brand-dark": " border border-gray-200 hover:bg-gray-200" } `}>{plan.cta}</Button>
+                 </Link>
             </div>
                     </motion.div>
                 ) )}

@@ -4,6 +4,7 @@ import React from 'react'
 import { motion } from 'framer-motion'
 import {creatorSteps} from "../../data/data"
 import { Button } from '../ui/button'
+import Link from 'next/link'
 
 
 function GetStarted() {
@@ -44,7 +45,9 @@ function GetStarted() {
 
         <motion.div className='text-center mt-6' variants={itemVariants}>
             <Button className='bg-brand text-white mx-auto '> 
+            <Link href="/sign-up">
             Join 10,000+ Early Creators Building Wealth
+            </Link>
         </Button>
         </motion.div>
        </div>
